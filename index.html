@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joka.ca Lab | Private Homelab Infrastructure — Ontario, Canada</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="inview.png">
+
+    <!-- SEO: Core Meta Tags -->
+    <meta name="description" content="lab.joka.ca — Private homelab infrastructure operated by Joka.ca. Authorized users only. Ontario, Canada.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://lab.joka.ca/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lab.joka.ca/">
+    <meta property="og:title" content="Joka.ca Lab | Private Homelab Infrastructure">
+    <meta property="og:description" content="Private homelab infrastructure operated by Joka.ca. Authorized users only.">
+    <meta property="og:locale" content="en_CA">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- CSS & UI Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Interactivity Scripts -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js" defer></script>
+
+    <style>
+
+        :root { scroll-behavior: smooth; }
+
+        html { overflow-x: hidden; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .font-mono { font-family: 'Space Mono', monospace; }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+            background-color: #050505;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(13, 13, 13, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(234, 179, 8, 0.15);
+        }
+
+        .glass-panel {
+            background: rgba(5, 5, 5, 0.90);
+            backdrop-filter: blur(24px);
+            border-left: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.45));
+            transition: filter 0.3s ease;
+        }
+        .group:hover .logo-glow {
+            filter: drop-shadow(0 0 16px rgba(0, 255, 0, 0.75));
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(234, 179, 8, 0.3);
+            box-shadow: 0 0 24px rgba(234, 179, 8, 0.08);
+        }
+
+        .text-glow-yellow { text-shadow: 0 0 15px rgba(234, 179, 8, 0.5); }
+        .text-glow-green  { text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(234, 179, 8, 0.3), transparent);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #eab308; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
+
+        /* Text selection */
+        ::selection { background: rgba(234, 179, 8, 0.3); color: #ffffff; }
+        ::-moz-selection { background: rgba(234, 179, 8, 0.3); color: #ffffff; }
+
+        /* Focus ring */
+        :focus-visible {
+            outline: 2px solid rgba(234, 179, 8, 0.6);
+            outline-offset: 3px;
+        }
+
+        /* Preloader progress bar */
+        @keyframes progress {
+            from { transform: scaleX(0); }
+            to   { transform: scaleX(1); }
+        }
+
+        /* Parallax shapes */
+        .parallax-shape {
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.12;
+        }
+
+        /* Status dot pulse */
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.6); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(234, 179, 8, 0); }
+        }
+        .status-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        /* Terminal blink cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .terminal-cursor {
+            animation: blink 1s step-start infinite;
+        }
+
+        /* Hamburger menu slide-in */
+        [x-cloak] { display: none !important; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .animate-marquee { animation: none !important; }
+        }
+    </style>
+</head>
+
+<body x-data="{
+    loading: true,
+    menuOpen: false,
+    route: 'home',
+    year: new Date().getFullYear(),
+    mx: 0,
+    my: 0
+}"
+x-init="setTimeout(() => { loading = false; setTimeout(() => { AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' }); }, 300); }, 800)"
+@mousemove="mx = ($event.clientX / window.innerWidth - 0.5) * 40; my = ($event.clientY / window.innerHeight - 0.5) * 40; if (window.innerWidth >= 1024 && $event.clientX > window.innerWidth - 75 && $event.clientX < window.innerWidth - 15 && !menuOpen) { menuOpen = true; }">
+
+    <!-- ================================================ -->
+    <!-- PRELOADER                                         -->
+    <!-- ================================================ -->
+    <div x-show="loading"
+         x-transition:leave="transition ease-in-out duration-1000"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-full"
+         class="fixed inset-0 z-[100] bg-[#020202] flex flex-col items-center justify-center">
+
+        <!-- Animated Radar Logo Group -->
+        <div class="relative flex items-center justify-center mb-10">
+            <!-- Outer spinning ring -->
+            <div class="absolute inset-[-1.5rem] rounded-full border-t-2 border-b-2 border-green-500/40 animate-[spin_3s_linear_infinite]"></div>
+            <!-- Inner spinning ring -->
+            <div class="absolute inset-[-0.75rem] rounded-full border-l-2 border-r-2 border-yellow-400/40 animate-[spin_2s_linear_infinite_reverse]"></div>
+            <img src="inview.png" class="h-24 w-24 rounded-xl animate-pulse border border-green-500/20 relative z-10" alt="Joka Logo" style="filter: drop-shadow(0 0 12px rgba(234,179,8,0.3))">
+        </div>
+
+        <!-- Loading Bar -->
+        <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden relative">
+            <div class="absolute top-0 left-0 h-full bg-green-500 w-full origin-left" style="animation: progress 0.75s ease-out forwards;"></div>
+        </div>
+        <div class="mt-6 px-4 text-center font-mono text-xs text-green-500 uppercase tracking-[0.3em] flex flex-col space-y-1">
+            <span class="animate-pulse">> Decrypting lab.joka.ca</span>
+            <span class="text-yellow-400 opacity-70">> Authorized access only</span>
+        </div>
+    </div>
+
+    <!-- Particle Background -->
+    <div id="particles-js" aria-hidden="true" :class="{'opacity-0 pointer-events-none': route === 'terms' || route === 'privacy'}"></div>
+
+    <!-- Parallax Background Shapes -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <div class="absolute rounded-full blur-3xl opacity-[0.07] bg-yellow-400 w-[600px] h-[600px] -top-[200px] -right-[200px]"
+             style="transform: translate3d(0,0,0)"></div>
+        <div class="absolute rounded-full blur-3xl opacity-[0.05] bg-green-500 w-[400px] h-[400px] top-[50%] -left-[150px]"
+             style="transform: translate3d(0,0,0)"></div>
+    </div>
+
+    <!-- Parallax ambient shapes -->
+    <div class="parallax-shape bg-yellow-400 w-80 h-80 top-[15%] left-[-8%]"></div>
+    <div class="parallax-shape bg-green-500 w-64 h-64 top-[55%] right-[-6%]"></div>
+    <div class="parallax-shape bg-yellow-400 w-[420px] h-[420px] top-[110%] left-[25%]"></div>
+
+    <!-- ================================================ -->
+    <!-- NAV                                               -->
+    <!-- ================================================ -->
+    <nav class="fixed top-0 w-full z-40 glass px-4 sm:px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-4 group">
+                <img src="inview.png" class="h-10 w-10 rounded logo-glow group-hover:scale-110 transition-transform duration-300" alt="Joka Logo">
+                <span class="text-2xl font-black tracking-tighter uppercase italic text-white group-hover:text-green-500 transition-colors">Joka<span class="text-yellow-400">.ca</span> <span class="text-slate-400 font-normal text-lg">Lab</span></span>
+            </a>
+
+            <button @click="menuOpen = true" class="text-yellow-400 hover:text-green-500 transition-colors flex items-center space-x-2">
+                <span class="font-mono text-sm uppercase hidden md:block">Menu</span>
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ================================================ -->
+    <!-- SIDE MENU DRAWER                                  -->
+    <!-- ================================================ -->
+    <div x-show="menuOpen" style="display: none;" class="relative z-50">
+        <div x-show="menuOpen"
+             x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+             @click="menuOpen = false"
+             class="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"></div>
+
+        <div x-show="menuOpen"
+             x-transition:enter="transform transition ease-in-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+             x-transition:leave="transform transition ease-in-out duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
+             class="fixed right-0 top-0 h-full w-full md:w-[450px] glass-panel flex flex-col justify-between p-8 md:p-12 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] overflow-y-auto">
+
+            <div>
+                <div class="flex justify-between items-center mb-12">
+                    <span class="text-xs font-mono text-green-500 uppercase tracking-widest">// Lab Navigation</span>
+                    <button @click="menuOpen = false" aria-label="Close navigation menu" class="text-slate-400 hover:text-yellow-400 transition-colors">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <div class="flex flex-col space-y-6 text-2xl font-black uppercase italic tracking-wider">
+                    <a href="#status" @click="menuOpen = false" class="italic text-left text-white hover:text-yellow-400 hover:translate-x-4 transition-all duration-300">STATUS</a>
+                    <a href="#platform" @click="menuOpen = false" class="italic text-left text-white hover:text-yellow-400 hover:translate-x-4 transition-all duration-300">PLATFORM</a>
+                    <a href="#access" @click="menuOpen = false" class="italic text-left text-white hover:text-yellow-400 hover:translate-x-4 transition-all duration-300">ACCESS & USAGE</a>
+                    <a href="https://joka.ca" target="_blank" rel="noopener" class="italic text-left text-white hover:text-green-500 hover:translate-x-4 transition-all duration-300 flex items-center group">
+                        JOKA.CA
+                        <svg class="w-6 h-6 ml-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                    <a href="https://status.joka.ca" target="_blank" rel="noopener" class="italic text-left text-white hover:text-green-500 hover:translate-x-4 transition-all duration-300 flex items-center group">
+                        SYSTEM STATUS
+                        <svg class="w-6 h-6 ml-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                    <a href="mailto:contact-us@joka.ca" class="italic text-left text-white hover:text-yellow-400 hover:translate-x-4 transition-all duration-300 flex items-center group">
+                        CONTACT
+                        <svg class="w-6 h-6 ml-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </a>
+                </div>
+
+                <div class="mt-16 pt-8 border-t border-white/10 flex flex-col space-y-4">
+                    <span class="text-xs font-mono text-yellow-400 uppercase tracking-widest">// Legal Docs</span>
+                    <button @click="route = 'terms'; menuOpen = false; window.scrollTo(0,0);" class="text-left text-sm font-bold text-slate-400 hover:text-white transition-colors">Terms of Service</button>
+                    <button @click="route = 'privacy'; menuOpen = false; window.scrollTo(0,0);" class="text-left text-sm font-bold text-slate-400 hover:text-white transition-colors">Privacy Policy</button>
+                </div>
+            </div>
+
+            <div class="mt-8 text-xs font-mono text-slate-500 uppercase tracking-widest border-l-2 border-green-500 pl-3">
+                // Joka.ca Lab — Private Infrastructure
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ROUTE: HOME                               -->
+    <!-- ========================================== -->
+    <div x-show="route === 'home'"
+         x-transition:enter="transition ease-out duration-700 delay-300"
+         x-transition:enter-start="opacity-0 translate-y-4"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="relative z-10 w-full overflow-hidden">
+
+    <!-- HERO -->
+    <section class="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 max-w-7xl mx-auto pt-20 pb-16">
+        <div class="rellax" data-rellax-speed="1" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+
+            <!-- Badge -->
+            <div class="inline-block border border-green-500/30 bg-green-500/10 text-green-500 font-mono text-xs px-3 py-1 rounded-full mb-6 uppercase tracking-[0.2em]">
+                <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-[0_0_8px_rgba(0,255,0,0.8)]"></span> Private Platform &middot; Authorized Users Only
+            </div>
+
+            <!-- Heading -->
+            <h1 data-aos="fade-up" data-aos-delay="150"
+                class="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase italic leading-[1.1] sm:leading-[1.05] mb-8 break-words z-10 w-full">
+                <!-- Deep Background Layer (Green) -->
+                <span class="absolute top-0 left-0 text-green-500/30 blur-[4px] transition-transform duration-200 ease-out pointer-events-none"
+                      :style="`transform: translate3d(${mx * -1}px, ${my * -1}px, 0) scale(1.05)`" aria-hidden="true">
+                    Homelab.
+                </span>
+                <!-- Mid Layer (Yellow) -->
+                <span class="absolute top-0 left-0 text-yellow-400/30 blur-[2px] transition-transform duration-100 ease-out pointer-events-none"
+                      :style="`transform: translate3d(${mx * -0.5}px, ${my * -0.5}px, 0) scale(1.02)`" aria-hidden="true">
+                    Homelab.
+                </span>
+                <!-- Front Layer (White) -->
+                <span class="relative text-white transition-transform duration-75 ease-out"
+                      :style="`transform: translate3d(${mx * 0.8}px, ${my * 0.8}px, 0)`">
+                    Homelab.<br><span class="text-yellow-400">Always On.</span>
+                </span>
+            </h1>
+
+            <!-- Subheading -->
+            <p data-aos="fade-up"
+               class="max-w-3xl text-slate-300 text-base sm:text-lg font-sans sm:font-mono leading-relaxed mb-6 border-l-2 border-yellow-400/50 pl-4">Private infrastructure operated by Joka.ca. Authorized users only.</p>
+
+            <!-- CTA Buttons -->
+            <div data-aos="fade-up" class="flex flex-wrap gap-4">
+                <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer"
+                   class="bg-yellow-400 text-black px-6 sm:px-8 py-4 font-black uppercase tracking-tighter hover:bg-green-500 transition-colors duration-300 inline-flex items-center rounded-sm shadow-[0_0_30px_rgba(234,179,8,0.5)] text-sm sm:text-base">
+                    Check Status
+                    <svg class="w-5 h-5 ml-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+                <a href="mailto:contact-us@joka.ca"
+                   class="inline-flex items-center gap-2 border border-yellow-400/70 text-yellow-400 px-6 py-4 font-bold uppercase tracking-widest hover:bg-yellow-400/10 transition-all duration-300 text-sm">
+                    Request Access
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 opacity-40">
+            <span class="font-mono text-xs text-slate-500 tracking-widest uppercase">Scroll</span>
+            <div class="w-px h-8 bg-gradient-to-b from-yellow-400/60 to-transparent"></div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================================================ -->
+    <!-- STATUS SECTION                                    -->
+    <!-- ================================================ -->
+    <section id="status" class="py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+
+            <div data-aos="fade-up" class="mb-12 text-center">
+                <span class="font-mono text-xs text-yellow-400 uppercase tracking-[0.3em]">// system status</span>
+                <h2 class="mt-3 text-3xl md:text-4xl font-black text-white tracking-tight">Service Overview</h2>
+                <p class="mt-3 font-mono text-sm text-slate-400">Live status at <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer" class="text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition-colors">status.joka.ca</a></p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Tile 1: Media Streaming -->
+                <div data-aos="fade-up" data-aos-delay="50"
+                     data-tilt data-tilt-max="8" data-tilt-speed="400"
+                     class="glass-card rounded-xl p-6 flex items-start space-x-4">
+                    <div class="mt-1 flex-shrink-0">
+                        <span class="block w-3 h-3 rounded-full bg-yellow-400 status-dot"></span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-white font-bold text-base mb-1">Media Streaming</h3>
+                        <p class="font-mono text-xs text-slate-500 mb-3">On-demand content delivery</p>
+                        <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center font-mono text-xs text-green-500 hover:text-green-400 transition-colors uppercase tracking-widest">
+                            View Status <span class="ml-1">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tile 2: Game Servers -->
+                <div data-aos="fade-up" data-aos-delay="100"
+                     data-tilt data-tilt-max="8" data-tilt-speed="400"
+                     class="glass-card rounded-xl p-6 flex items-start space-x-4">
+                    <div class="mt-1 flex-shrink-0">
+                        <span class="block w-3 h-3 rounded-full bg-yellow-400 status-dot"></span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-white font-bold text-base mb-1">Game Servers</h3>
+                        <p class="font-mono text-xs text-slate-500 mb-3">Multiplayer game hosting</p>
+                        <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center font-mono text-xs text-green-500 hover:text-green-400 transition-colors uppercase tracking-widest">
+                            View Status <span class="ml-1">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tile 3: Network & Routing -->
+                <div data-aos="fade-up" data-aos-delay="150"
+                     data-tilt data-tilt-max="8" data-tilt-speed="400"
+                     class="glass-card rounded-xl p-6 flex items-start space-x-4">
+                    <div class="mt-1 flex-shrink-0">
+                        <span class="block w-3 h-3 rounded-full bg-yellow-400 status-dot"></span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-white font-bold text-base mb-1">Network &amp; Routing</h3>
+                        <p class="font-mono text-xs text-slate-500 mb-3">Core networking infrastructure</p>
+                        <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center font-mono text-xs text-green-500 hover:text-green-400 transition-colors uppercase tracking-widest">
+                            View Status <span class="ml-1">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tile 4: Storage & Backup -->
+                <div data-aos="fade-up" data-aos-delay="200"
+                     data-tilt data-tilt-max="8" data-tilt-speed="400"
+                     class="glass-card rounded-xl p-6 flex items-start space-x-4">
+                    <div class="mt-1 flex-shrink-0">
+                        <span class="block w-3 h-3 rounded-full bg-yellow-400 status-dot"></span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-white font-bold text-base mb-1">Storage &amp; Backup</h3>
+                        <p class="font-mono text-xs text-slate-500 mb-3">Persistent data &amp; redundancy</p>
+                        <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center font-mono text-xs text-green-500 hover:text-green-400 transition-colors uppercase tracking-widest">
+                            View Status <span class="ml-1">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================================================ -->
+    <!-- PLATFORM INFO SECTION                             -->
+    <!-- ================================================ -->
+    <section id="platform" class="py-20 px-6">
+        <div class="max-w-3xl mx-auto">
+
+            <div data-aos="fade-up" class="mb-10 text-center">
+                <span class="font-mono text-xs text-yellow-400 uppercase tracking-[0.3em]">// platform</span>
+                <h2 class="mt-3 text-3xl md:text-4xl font-black text-white tracking-tight">Platform Info</h2>
+            </div>
+
+            <!-- Terminal panel -->
+            <div data-aos="fade-up" data-aos-delay="100"
+                 data-tilt data-tilt-max="8" data-tilt-speed="400"
+                 class="rounded-xl overflow-hidden border border-green-500/20 shadow-[0_0_40px_rgba(34,197,94,0.06)]">
+
+                <!-- Terminal title bar -->
+                <div class="bg-[#0d0d0d] border-b border-white/5 px-4 py-3 flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500/60"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-400/60"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500/60"></span>
+                    <span class="ml-4 font-mono text-xs text-slate-500 tracking-widest">lab.joka.ca — platform overview</span>
+                </div>
+
+                <!-- Terminal body -->
+                <div class="bg-[#080808] px-6 py-6 font-mono text-sm leading-relaxed">
+                    <p class="text-slate-500 mb-4">// platform overview</p>
+                    <p class="text-green-500">&gt; <span class="text-slate-200">Private homelab infrastructure</span></p>
+                    <p class="text-green-500 mt-2">&gt; <span class="text-slate-200">Self-hosted services for authorized users</span></p>
+                    <p class="text-green-500 mt-2">&gt; Uptime monitoring: <a href="https://status.joka.ca" target="_blank" rel="noopener noreferrer" class="text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition-colors">status.joka.ca</a></p>
+                    <p class="text-green-500 mt-2">&gt; Contact for access: <a href="mailto:contact-us@joka.ca" class="text-yellow-400 hover:text-yellow-300 underline underline-offset-2 transition-colors">contact-us@joka.ca</a></p>
+                    <p class="mt-4 text-green-500/40 flex items-center">
+                        &gt; <span class="ml-1 terminal-cursor text-green-500">&#9646;</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================================================ -->
+    <!-- ACCESS & USAGE SECTION                            -->
+    <!-- ================================================ -->
+    <section id="access" class="py-20 px-6">
+        <div class="max-w-3xl mx-auto">
+
+            <div data-aos="fade-up" class="mb-10 text-center">
+                <span class="font-mono text-xs text-yellow-400 uppercase tracking-[0.3em]">// access &amp; usage</span>
+                <h2 class="mt-3 text-3xl md:text-4xl font-black text-white tracking-tight">Access Policy</h2>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="100" class="glass-card rounded-xl p-8 space-y-5">
+
+                <div class="flex items-start space-x-4">
+                    <span class="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                    <p class="text-slate-300 leading-relaxed">Access is by invitation only.</p>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <span class="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                    <p class="text-slate-300 leading-relaxed">Do not share your credentials or access with others.</p>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <span class="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                    <p class="text-slate-300 leading-relaxed">Services are provided free of charge with no SLA or uptime guarantee.</p>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    <span class="mt-2 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400"></span>
+                    <p class="text-slate-300 leading-relaxed">Access may be revoked at any time.</p>
+                </div>
+
+                <div class="pt-4 border-t border-white/5">
+                    <a href="mailto:contact-us@joka.ca"
+                       class="inline-flex items-center space-x-2 bg-yellow-400/10 hover:bg-yellow-400/20 border border-yellow-400/30 hover:border-yellow-400/60 text-yellow-400 font-mono text-sm px-5 py-2.5 rounded-lg transition-all duration-200 uppercase tracking-widest">
+                        <span>Contact for Access</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div><!-- end route: home -->
+
+    <!-- ========================================== -->
+    <!-- ROUTE: TERMS                               -->
+    <!-- ========================================== -->
+    <div x-show="route === 'terms'"
+         style="display: none;"
+         x-transition:enter="transition ease-out duration-700 delay-300"
+         x-transition:enter-start="opacity-0 translate-y-4"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="relative z-10 w-full overflow-hidden">
+    <section class="py-20 px-4 sm:px-6 pt-32">
+        <div class="max-w-4xl mx-auto mb-8">
+            <button @click="route = 'home'; window.scrollTo(0,0);" class="inline-flex items-center gap-2 border border-yellow-400/50 text-yellow-400 hover:bg-yellow-400/10 hover:border-yellow-400 px-4 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 rounded-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back to Home
+            </button>
+        </div>
+        <div class="max-w-4xl mx-auto">
+            <div data-aos="fade-up" class="glass p-6 sm:p-10 md:p-16 border-t-4 border-yellow-400 shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden">
+                <h2 class="text-3xl sm:text-4xl font-black uppercase italic mb-8 sm:mb-10 text-white break-words" style="font-family: 'Space Mono', monospace;">
+                    Terms <span class="text-yellow-400 inline-block mt-2 sm:mt-0">and Conditions</span>
+                </h2>
+                <div class="prose prose-invert max-w-none text-slate-300 space-y-6 text-sm sm:text-base leading-relaxed font-sans">
+                    <p class="text-xs font-mono text-slate-500 uppercase tracking-widest">Last Updated: March 29, 2026</p>
+                    <p><strong>1. What lab.joka.ca Is</strong><br>lab.joka.ca is a personal homelab operated by Joka.ca, based in Ontario, Canada ("we", "us", "Joka.ca"). These services are provided entirely free of charge as a personal, non-commercial courtesy to specifically invited friends and family ("you"). This is not a business, product, or commercial service of any kind. No fees, subscriptions, or payments are charged, accepted, or implied.</p>
+                    <p><strong>2. Access Is a Personal Privilege, Not a Right</strong><br>Access to lab.joka.ca services is granted by personal invitation only and is entirely at Joka.ca's discretion. Access is a revocable privilege, not a right or entitlement. Joka.ca may revoke, suspend, restrict, or terminate your access at any time, for any reason or no reason, without prior notice, without explanation, and without any liability or obligation to you.</p>
+                    <p><strong>3. No Uptime Guarantee — No SLA</strong><br>All services on lab.joka.ca are provided strictly "AS IS" and "AS AVAILABLE." There is no uptime guarantee, no service level agreement (SLA), and no commitment of any kind regarding availability, performance, response time, or continuity. Services may go down, be reconfigured, change, or be discontinued at any time and without notice.</p>
+                    <p><strong>4. No Data Backup Guarantee</strong><br>There is absolutely no guarantee that your data will be backed up, preserved, or recoverable. You are entirely and solely responsible for maintaining your own independent backups of any data, content, or files associated with lab.joka.ca services. Joka.ca accepts no responsibility whatsoever for data loss, corruption, deletion, or unavailability, whether caused by hardware failure, software error, administrative action, or any other cause.</p>
+                    <p><strong>5. Zero Liability</strong><br>To the maximum extent permitted by applicable Ontario and Canadian law, Joka.ca's total aggregate liability to you for any and all claims arising from or related to your access to or use of lab.joka.ca services is zero dollars ($0.00 CAD). Because these services are provided entirely free of charge and for personal non-commercial purposes, no refund, credit, or compensation of any kind is available or applicable under any circumstances.</p>
+                    <p><strong>6. No Warranty of Any Kind</strong><br>All lab.joka.ca services are provided without any warranty of any kind, express or implied, including without limitation any implied warranty of merchantability, fitness for a particular purpose, security, accuracy, reliability, or non-infringement.</p>
+                    <p><strong>7. Authorized Use Only</strong><br>Your access is personal and non-transferable. You must not share your credentials, access links, or account details with any other person. Access is authorized only for you personally as the invited user. Any unauthorized sharing of access is a breach of these Terms and will result in immediate access revocation.</p>
+                    <p><strong>8. Acceptable Use</strong><br>You agree not to use lab.joka.ca services to: violate any applicable law or regulation; store, transmit, or process illegal content; infringe any intellectual property rights; attempt unauthorized access beyond what you have been expressly granted; disrupt or overload the services; or use the services for any commercial purpose.</p>
+                    <p><strong>9. Indemnification</strong><br>You agree to indemnify and hold harmless Joka.ca from and against any third-party claims, liabilities, damages, or expenses (including reasonable legal fees) arising out of your use of lab.joka.ca services, any content you upload or transmit, your breach of these Terms, or your violation of any third-party rights.</p>
+                    <p><strong>10. Service Termination</strong><br>Joka.ca may terminate or discontinue lab.joka.ca services or any part of them at any time, permanently or temporarily, without notice and without liability.</p>
+                    <p><strong>11. Governing Law</strong><br>These Terms are governed by the laws of the Province of Ontario and the applicable laws of Canada. Any dispute shall be resolved exclusively in the courts of the Province of Ontario.</p>
+                    <p><strong>12. Severability</strong><br>If any provision of these Terms is found to be unlawful or unenforceable, that provision shall be severed without affecting the remaining provisions.</p>
+                    <p><strong>13. Force Majeure</strong><br>Joka.ca shall not be liable for service interruptions, downtime, or unavailability resulting from circumstances beyond its reasonable control, including but not limited to hardware failure, power outages, internet disruptions, natural disasters, or third-party service failures. As a non-commercial platform, no uptime guarantees are made and service may be suspended at any time.</p>
+                    <p><strong>14. Entire Agreement</strong><br>These Terms of Service constitute the entire agreement between you and Joka.ca regarding your use of the Platform and supersede any prior understandings or agreements.</p>
+                    <p><strong>15. Waiver</strong><br>The failure of Joka.ca to enforce any right or provision of these Terms shall not constitute a waiver of that right or provision unless acknowledged and agreed to in writing.</p>
+                    <p><strong>16. Modifications</strong><br>Joka.ca reserves the right to modify these Terms at any time without prior notice. Continued use constitutes acceptance of the revised Terms.</p>
+                    <p><strong>17. Contact</strong><br>Questions regarding these Terms may be directed to: <strong>contact-us@joka.ca</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div><!-- end route: terms -->
+
+    <!-- ========================================== -->
+    <!-- ROUTE: PRIVACY                             -->
+    <!-- ========================================== -->
+    <div x-show="route === 'privacy'"
+         style="display: none;"
+         x-transition:enter="transition ease-out duration-700 delay-300"
+         x-transition:enter-start="opacity-0 translate-y-4"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="relative z-10 w-full overflow-hidden">
+    <section class="py-20 px-4 sm:px-6 pt-32">
+        <div class="max-w-4xl mx-auto mb-8">
+            <button @click="route = 'home'; window.scrollTo(0,0);" class="inline-flex items-center gap-2 border border-yellow-400/50 text-yellow-400 hover:bg-yellow-400/10 hover:border-yellow-400 px-4 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 rounded-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back to Home
+            </button>
+        </div>
+        <div class="max-w-4xl mx-auto">
+            <div data-aos="fade-up" class="glass p-6 sm:p-10 md:p-16 border-t-4 border-green-500 shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden">
+                <h2 class="text-3xl sm:text-4xl font-black uppercase italic mb-8 sm:mb-10 text-white break-words" style="font-family: 'Space Mono', monospace;">
+                    Privacy <span class="text-green-500 inline-block mt-2 sm:mt-0">Policy</span>
+                </h2>
+                <div class="prose prose-invert max-w-none text-slate-300 space-y-6 text-sm sm:text-base leading-relaxed font-sans">
+                    <p class="text-xs font-mono text-slate-500 uppercase tracking-widest">Last Updated: March 29, 2026</p>
+                    <p><strong>1. Who Operates This Service</strong><br>lab.joka.ca is a personal homelab operated by Joka.ca, based in Ontario, Canada. These services are non-commercial and provided as a personal courtesy to invited friends and family. Contact for all privacy matters: <strong>contact-us@joka.ca</strong></p>
+                    <p><strong>2. PIPEDA &amp; Applicable Law</strong><br>Because lab.joka.ca is a personal, non-commercial service, it falls below the threshold for PIPEDA's commercial activity requirement. This policy reflects good privacy practice and a personal commitment to handling your information responsibly. Ontario jurisdiction applies throughout.</p>
+                    <p><strong>3. What Data Is Collected</strong><br>The following information may be collected automatically or through service operation:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Access logs:</strong> IP address, timestamp, and the service or resource accessed.</li>
+                        <li><strong>Account credentials:</strong> Usernames and hashed passwords associated with your account.</li>
+                        <li><strong>Usage data:</strong> Activity associated with your use of specific services, to the extent logged for operational purposes.</li>
+                    </ul>
+                    <p>No payment information, government identifiers, health information, or sensitive personal data is collected.</p>
+                    <p><strong>4. Why This Data Is Collected</strong><br>Data is collected solely to: provide and operate services; authenticate and authorize access; troubleshoot technical issues; detect unauthorized access or security incidents; and maintain infrastructure security and integrity.</p>
+                    <p><strong>5. How Data Is Used</strong><br>Personal information is used only for the operational purposes described above. It is not used for advertising, marketing, profiling, or any commercial purpose.</p>
+                    <p><strong>6. No Third-Party Sharing</strong><br>Personal information is not shared with, sold to, or disclosed to any third party for any purpose. There are no third-party analytics platforms, advertising networks, or data brokers involved. Infrastructure is fully self-hosted.</p>
+                    <p><strong>7. Retention</strong><br>Access logs are retained for up to 90 days then deleted via log rotation. Account credential data is retained for the duration of your active access and deleted within 30 days of a written deletion request to contact-us@joka.ca.</p>
+                    <p><strong>8. Your Rights</strong><br>You may at any time request to know what personal information is held about you, request correction of inaccurate information, or request deletion of your account and associated data. Contact: <strong>contact-us@joka.ca</strong></p>
+                    <p><strong>9. Security</strong><br>Reasonable technical safeguards are used including access controls, encrypted connections where applicable, and network segmentation. No system can guarantee absolute security. In the event of a significant security incident, reasonable efforts will be made to notify you.</p>
+                    <p><strong>10. No Cookies or External Tracking</strong><br>lab.joka.ca does not use advertising cookies, tracking pixels, or third-party analytics. Any cookies set by individual services are functional and operational in nature (e.g., session authentication).</p>
+                    <p><strong>11. Changes to This Policy</strong><br>This policy may be updated at any time. Material changes will be reflected on this page with an updated "Last Updated" date.</p>
+                    <p><strong>12. Contact</strong><br>For privacy questions, data access requests, or deletion requests: <strong>contact-us@joka.ca</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div><!-- end route: privacy -->
+
+    <!-- ================================================ -->
+    <!-- FOOTER                                            -->
+    <!-- ================================================ -->
+    <footer class="py-8 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-md text-center flex flex-col items-center">
+        <a href="https://joka.ca" target="_blank" rel="noopener" class="text-slate-400 hover:text-green-500 transition-colors mb-4 flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-widest">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            Back to joka.ca
+        </a>
+        <p class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-2">Joka.ca Lab &middot; Private Infrastructure</p>
+        <p class="text-sm font-mono text-slate-600 uppercase tracking-widest">
+            Copyright &copy; <span x-text="year"></span> Joka.ca &mdash; All Rights Reserved
+        </p>
+    </footer>
+
+    <!-- ================================================ -->
+    <!-- SCRIPTS                                           -->
+    <!-- ================================================ -->
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+        // Particles.js config — matches joka.ca aesthetic
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#eab308" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.5, "random": false },
+                    "size": { "value": 3, "random": true },
+                    "line_linked": { "enable": true, "distance": 150, "color": "#eab308", "opacity": 0.2, "width": 1 },
+                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "out_mode": "out" }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "repulse" },
+                        "onclick": { "enable": true, "mode": "push" },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+
+        // Rellax parallax
+        setTimeout(() => {
+            if (typeof Rellax !== 'undefined') {
+                new Rellax('.rellax', { center: false, wrapper: null, round: true, vertical: true, horizontal: false });
+            }
+        }, 100);
+
+        // VanillaTilt
+        if (typeof VanillaTilt !== 'undefined') {
+            VanillaTilt.init(document.querySelectorAll('[data-tilt]'), { max: 8, speed: 400, glare: false });
+        }
+    });
+    </script>
+</body>
+</html>
